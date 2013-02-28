@@ -11,4 +11,4 @@ Usage
 
 
 
-Run from your got project directory (ABOVE your .git directory)
+Run from your git project directory (ABOVE your .git directory)
