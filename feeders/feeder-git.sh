@@ -1,15 +1,15 @@
 #!/bin/sh -e
 
-REMOTE=origin
-BRANCH=master
-INTERVAL=5
+REMOTE=$1
+BRANCH=$2
+INTERVAL=$3
 
-SHA=$(git rev-list $REMOTE/$BRANCH --max-count=1)
+test "$4" && SHA=$4 || SHA=$(git rev-list $REMOTE/$BRANCH --max-count=1)
 #SHA=1b2be36d0f9f3d84950616a2d2fefad782118000
 
 while true
 do
-    for SHA in $(git rev-list --reverse $REMOTE/$BRANCH $SHA..)
+    for SHA in $(git rev-list --reverse --first-parent --no-merges $REMOTE/$BRANCH $SHA..)
     do
         AUTHOR=$(git log --format=%an $SHA --max-count=1)
         TIMESTAMP=$(git log --format=%at $SHA --max-count=1)
