@@ -2,4 +2,4 @@
 
 SCRIPTS_DIR=$(dirname "$0")
 
-"$SCRIPTS_DIR"/git-live.sh $* | gource --log-format custom -
+"$SCRIPTS_DIR"/git-live.sh $* | gource --log-format custom --file-idle-time 0 -
