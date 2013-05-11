@@ -1,20 +1,17 @@
 live-git-for-gource
 ===================
-
-Live Git Log For Gource
-
-This will let you display LIVE commits to a (REMOTE) git repo.
-
-So it will also display commits beeing made by other contributors, in real time !
+Visualize activitiy in a Git repo (LIVE commits!)
+by polling the repository for new commits and feeding the log
+of changes to Gource.
 
 
 Usage
-===================
+-----
+Copy the `git-live.sh` script to Git project you want to visualize
+and run this command:
 
+    ./git-live.sh | gource --log-format custom -
 
-
-CHANGE THE ORIGIN-NAME AND REMOTE BRANCH-NAME   (or remove to only track local git copy)
-
-
-Run from your git project directory (ABOVE your .git directory / INSIDE your project dir):
-    ./git-live.sh  | gource --log-format custom -
+By default this will feed Gource with changes to `origin/master`,
+polling the Git repository eveyr 5 seconds. You can change these
+parameters by editing the variables near the top of the file.
