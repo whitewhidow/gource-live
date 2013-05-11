@@ -7,10 +7,15 @@ of changes to Gource.
 
 Usage
 -----
-Copy the `git-live.sh` script to Git project you want to visualize
-and run this command:
+Copy the `feeders/feeder-git.sh` script to Git project you want
+to visualize and run this command:
 
-    ./git-live.sh | gource --log-format custom -
+    ./feeder-git.sh | gource --log-format custom -
+
+Alternatively, add *this* project to your `PATH`, and then inside
+the Git project you want to visualize simply run:
+
+    gource-live-git.sh
 
 By default this will feed Gource with changes to `origin/master`,
 polling the Git repository eveyr 5 seconds. You can change these
