@@ -11,6 +11,12 @@ Supported VCS:
 * Subversion
 
 
+Requirements
+------------
+* Gource: https://code.google.com/p/gource/
+* Python 2.7
+
+
 Usage
 -----
 1. Add *this* project to your `PATH` environment variable
