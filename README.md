@@ -1,20 +1,30 @@
-live-git-for-gource
-===================
+Gource LIVE
+===========
+Visualize activitiy in a VCS branch (LIVE commits!) by polling
+the repository for new commits and feeding the log
+of changes to Gource.
 
-Live Git Log For Gource
+Supported VCS:
 
-This will let you display LIVE commits to a (REMOTE) git repo.
+* Git
+* Bazaar
+* Subversion
 
-So it will also display commits beeing made by other contributors, in real time !
+
+Requirements
+------------
+* Gource: https://code.google.com/p/gource/
+* Python 2.7
 
 
 Usage
-===================
+-----
+1. Add *this* project to your `PATH` environment variable
 
+2. `cd` into your project's directory
 
+3. Run `gource-live.py`
 
-CHANGE THE ORIGIN-NAME AND REMOTE BRANCH-NAME   (or remove to only track local git copy)
-
-
-Run from your git project directory (ABOVE your .git directory / INSIDE your project dir):
-    ./git-live.sh  | gource --log-format custom -
+By default this will poll the repository every 5 seconds,
+and feed the changes to Gource. Run `gource-live.py --help`
+for more options.
