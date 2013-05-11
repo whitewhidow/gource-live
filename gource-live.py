@@ -11,6 +11,8 @@ if os.path.isdir('.git'):
     repo_type = 'git'
 elif os.path.isdir('.bzr'):
     repo_type = 'bzr'
+elif os.path.isdir('.svn'):
+    repo_type = 'svn'
 else:
     repo_type = None
 
@@ -31,12 +33,15 @@ parser.add_argument('--branch', default='master',
 args = parser.parse_args()
 
 if not repo_type:
-    parser.error('Current directory is either not the root directory of a project, or this VCS is not supported. Currently supported VCS: Git, Bazaar. Change into the root directory of your project (in a supported VCS) and re-run the same command.')
+    parser.error('Current directory is either not the root directory of a project, or this VCS is not supported. Currently supported VCS: Git, Bazaar, Subversion. Change into the root directory of your project (in a supported VCS) and re-run the same command.')
 elif repo_type == 'git':
     feeder_script = os.path.join(DIRNAME, 'feeders/feeder-git.sh')
     feeder_args = [feeder_script, args.remote, args.branch, args.interval, args.start]
 elif repo_type == 'bzr':
     feeder_script = os.path.join(DIRNAME, 'feeders/feeder-bzr.sh')
+    feeder_args = [feeder_script, args.interval, args.start]
+elif repo_type == 'svn':
+    feeder_script = os.path.join(DIRNAME, 'feeders/feeder-svn.sh')
     feeder_args = [feeder_script, args.interval, args.start]
 
 if args.show_feed:

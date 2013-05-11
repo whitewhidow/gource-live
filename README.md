@@ -1,8 +1,14 @@
 Gource LIVE
 ===========
-Visualize activitiy in a Git or Bazaar repo (LIVE commits!)
-by polling the repository for new commits and feeding the log
+Visualize activitiy in a VCS branch (LIVE commits!) by polling
+the repository for new commits and feeding the log
 of changes to Gource.
+
+Supported VCS:
+
+* Git
+* Bazaar
+* Subversion
 
 
 Usage
