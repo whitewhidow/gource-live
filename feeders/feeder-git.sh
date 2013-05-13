@@ -10,13 +10,15 @@ while true
 do
     for SHA in $(git rev-list --reverse --first-parent --no-merges $REMOTE/$BRANCH $SHA..)
     do
-        AUTHOR=$(git log --format=%an $SHA --max-count=1)
-        TIMESTAMP=$(git log --format=%at $SHA --max-count=1)
-        PREFIX="$TIMESTAMP|$AUTHOR|"
-        git diff-tree --no-commit-id --name-status $SHA | tr '\t' '|' | while read SUFFIX
+
+        SUFFIXES=`git show $REMOTE/$BRANCH $SHA --pretty=format:"" --name-status | sed "s/\t/|/g"`
+
+        for i in $SUFFIXES
         do
-            echo $PREFIX$SUFFIX
+            SUFFIX=`echo $i| sed "s/\t/|/g"| sed "s/ //g"`
+            echo ""$PREFIX"|"$SUFFIX
         done
+
     done
     git fetch $REMOTE >/dev/null 2>&1
     sleep $INTERVAL
