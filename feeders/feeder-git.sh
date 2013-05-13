@@ -13,7 +13,7 @@ do
         AUTHOR=$(git log --format=%an $SHA --max-count=1)
         TIMESTAMP=$(git log --format=%at $SHA --max-count=1)
         PREFIX="$TIMESTAMP|$AUTHOR|"
-        git diff-tree --no-commit-id --name-status $SHA | tr '\t' '|' | while read SUFFIX
+        git diff-tree -r --no-commit-id --name-status $SHA | tr '\t' '|' | while read SUFFIX
         do
             echo $PREFIX$SUFFIX
         done
