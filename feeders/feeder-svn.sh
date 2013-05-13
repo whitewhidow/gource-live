@@ -1,9 +1,9 @@
-#!/bin/sh -e
+#!/bin/bash -e
 #
 
 INTERVAL=$1; shift
 
-test "$1" && REVNO=$1 || REVNO=$(svn info | sed -ne 's/Revision: //p')
+test "$1" && REVNO=$1 || { REVNO=$(svn info | sed -ne 's/^Revision: //p'); test "$REVNO" -gt 10 && REVNO=$((REVNO-10)) || REVNO=1; }
 
 while true
 do
