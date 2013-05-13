@@ -4,7 +4,7 @@
 
 INTERVAL=$1; shift
 
-test "$1" && REVNO=$1 || REVNO=$(bzr revno)
+test "$1" && REVNO=$1 || { REVNO=$(bzr revno); test "$REVNO" -gt 10 && REVNO=$(bzr revno -rlast:10) || REVNO=1; }
 
 while true
 do
