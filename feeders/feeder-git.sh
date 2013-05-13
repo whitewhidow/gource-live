@@ -4,8 +4,7 @@ REMOTE=$1
 BRANCH=$2
 INTERVAL=$3
 
-test "$4" && SHA=$4 || SHA=$(git rev-list $REMOTE/$BRANCH --max-count=1)
-#SHA=1b2be36d0f9f3d84950616a2d2fefad782118000
+test "$4" && SHA=$4 || SHA=$(git rev-list $REMOTE/$BRANCH --max-count=10 | tail -n 1)
 
 while true
 do
