@@ -23,7 +23,7 @@ parser.add_argument('--show-feed', action='store_true',
 parser.add_argument('--interval', default='5',
         help='The repository polling interval to check for changes')
 parser.add_argument('--start', default='',
-        help='The SHA of the start revision to use instead of the 10th last revision')
+        help='The start revision to use instead of the default')
 # git specific
 parser.add_argument('--remote', default='origin',
         help='The remote to use instead of "origin" (Git only)')
