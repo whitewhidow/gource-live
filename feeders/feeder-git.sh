@@ -8,7 +8,7 @@ test "$4" && SHA=$4 || SHA=$(git rev-list $REMOTE/$BRANCH --max-count=10 | tail 
 
 while true
 do
-    for SHA in $(git rev-list --reverse --first-parent --no-merges $REMOTE/$BRANCH $SHA..)
+    for SHA in $(git rev-list --reverse --first-parent $REMOTE/$BRANCH $SHA..)
     do
         AUTHOR=$(git log --format=%an $SHA --max-count=1)
         TIMESTAMP=$(git log --format=%at $SHA --max-count=1)
