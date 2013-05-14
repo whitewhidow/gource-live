@@ -15,8 +15,10 @@ do
         PREFIX="$TIMESTAMP|$AUTHOR|"
         git diff-tree -r --no-commit-id --name-status $SHA | tr '\t' '|' | while read SUFFIX
         do
-            echo $PREFIX$SUFFIX
+            SUFFIX=`echo $i| sed "s/\t/|/g"| sed "s/ //g"`
+            echo ""$PREFIX$SUFFIX
         done
+
     done
     git fetch $REMOTE >/dev/null 2>&1
     sleep $INTERVAL
