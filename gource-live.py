@@ -24,6 +24,8 @@ parser.add_argument('--interval', default='5',
         help='The repository polling interval to check for changes')
 parser.add_argument('--start', default='',
         help='The start revision to use instead of the default')
+parser.add_argument('--with-sh', action='store_true',
+        help='Run the feeder scripts with sh as a shell')
 # git specific
 parser.add_argument('--remote', default='origin',
         help='The remote to use instead of "origin" (Git only)')
@@ -44,11 +46,20 @@ elif repo_type == 'svn':
     feeder_script = os.path.join(DIRNAME, 'feeders/feeder-svn.sh')
     feeder_args = [feeder_script, args.interval, args.start]
 
+if args.with_sh:
+    feeder_args.insert(0, 'sh')
+
 if args.show_feed:
-    feeder = subprocess.Popen(feeder_args)
+    if args.with_sh:
+        feeder = subprocess.Popen(' '.join(feeder_args), shell=True)
+    else:
+        feeder = subprocess.Popen(feeder_args)
     feeder.wait()
 else:
-    feeder = subprocess.Popen(feeder_args, stdout=subprocess.PIPE)
+    if args.with_sh:
+        feeder = subprocess.Popen(' '.join(feeder_args), shell=True, stdout=subprocess.PIPE)
+    else:
+        feeder = subprocess.Popen(feeder_args, stdout=subprocess.PIPE)
     gource = subprocess.Popen(['gource', '--log-format', 'custom', '--file-idle-time', '0', '-'], stdin=feeder.stdout)
     gource.communicate()
 

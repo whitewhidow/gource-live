@@ -28,3 +28,19 @@ Usage
 By default this will poll the repository every 5 seconds,
 and feed the changes to Gource. Run `gource-live.py --help`
 for more options.
+
+
+Troubleshooting
+---------------
+If you are getting something like this:
+
+    $ python "C:\Program Files (x86)\Gource\gource-live.py"
+    ['C:\\Program Files (x86)\\Gource\\feeders/feeder-git.sh', 'origin', 'master', '5', '']
+    gource: unsupported log format (you may need to regenerate your log file)
+    Try 'gource --help' for more information.
+
+Then, if you have `sh` in your `PATH`, then you can try to
+append the `--with-sh` flag to run scripts with `sh` and it
+might help, like this:
+
+    $ python "C:\Program Files (x86)\Gource\gource-live.py" --with-sh
