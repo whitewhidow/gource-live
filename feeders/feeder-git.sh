@@ -14,7 +14,7 @@ test "$START_SHA1" && SHA=$START_SHA1 || SHA=$(git rev-list $REMOTE/$BRANCH --ma
 
 while true
 do
-    for SHA in $(git rev-list --reverse --first-parent $REMOTE/$BRANCH $SHA..)
+    for SHA in $(git rev-list --reverse --first-parent $REMOTE/$BRANCH $SHA..$REMOTE/$BRANCH)
     do
         AUTHOR=$(git log --format=%an $SHA --max-count=1)
         TIMESTAMP=$(git log --format=%at $SHA --max-count=1)
