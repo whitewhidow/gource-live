@@ -1,14 +1,16 @@
 #!/bin/sh -e
 
 test $# -ge 1 || {
-    echo "usage: $0 INTERVAL [START_REVNO]"
+    echo "usage: $0 INTERVAL [STARTREV|0 RELSTART]"
     exit 1
 }
 
 INTERVAL=$1
-START_REVNO=$2
+STARTREV=$2
+RELSTART=$3
 
-test "$START_REVNO" -a "$START_REVNO" != 0 && REVNO=$START_REVNO || { REVNO=$(bzr revno); test "$REVNO" -gt 10 && REVNO=$(bzr revno -rlast:10) || REVNO=1; }
+test "$RELSTART" -a "$RELSTART" != 0 && NUM=$RELSTART || NUM=10
+test "$STARTREV" -a "$STARTREV" != 0 && REVNO=$STARTREV || { REVNO=$(bzr revno); test "$REVNO" -gt $NUM && REVNO=$(bzr revno -rlast:$NUM) || REVNO=1; }
 
 while true
 do

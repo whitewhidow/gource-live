@@ -1,18 +1,20 @@
 #!/bin/sh -e
 
 test $# -ge 1 || {
-    echo "usage: $0 INTERVAL [START_SHA1 [REMOTE [BRANCH]]]"
+    echo "usage: $0 INTERVAL [STARTREV|0 RELSTART [REMOTE [BRANCH]]]"
     exit 1
 }
 
 INTERVAL=$1
-START_SHA1=$2
-REMOTE=$3
-BRANCH=$4
+STARTREV=$2
+RELSTART=$3
+REMOTE=$4
+BRANCH=$5
 
 test "$REMOTE" || REMOTE=origin
 test "$BRANCH" || BRANCH=master
-test "$START_SHA1" -a "$START_SHA1" != 0 && SHA=$START_SHA1 || SHA=$(git rev-list $REMOTE/$BRANCH --max-count=10 | tail -n 1)
+test "$RELSTART" -a "$RELSTART" != 0 && NUM=$RELSTART || NUM=10
+test "$STARTREV" -a "$STARTREV" != 0 && SHA=$STARTREV || SHA=$(git rev-list $REMOTE/$BRANCH --max-count=$NUM | tail -n 1)
 
 while true
 do

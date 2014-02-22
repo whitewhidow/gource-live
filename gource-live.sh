@@ -24,7 +24,9 @@ usage() {
     echo
     echo Options:
     echo "  -i, --interval INTERVAL  Interval to poll repository for changes, default = $interval"
-    echo "  -s, --start START        Start revision, default = $start"
+    echo "  -s, --startrev REV       Start revision, default = $startrev"
+    echo "      --relstart N         Start from HEAD - N, ignored when startrev != 0, default = $relstart"
+    echo
     echo "  -r, --remote REMOTE      Name of remote (Git only), default = $remote"
     echo "  -b, --branch BRANCH      Name of branch (Git only), default = $branch"
     echo "      --feed-only          Show feed only, default = $feed_only"
@@ -37,14 +39,16 @@ usage() {
 args=
 feed_only=off
 interval=5
-start=0
+startrev=0
+relstart=10
 remote=origin
 branch=master
 while [ $# != 0 ]; do
     case $1 in
     -h|--help) usage ;;
     -i|--interval) shift; interval=$1 ;;
-    -s|--start) shift; start=$1 ;;
+    -s|--startrev) shift; startrev=$1 ;;
+    --relstart) shift; relstart=$1 ;;
     -r|--remote) shift; remote=$1 ;;
     -b|--branch) shift; branch=$1 ;;
     --feed-only) feed_only=on ;;
@@ -66,13 +70,13 @@ feeders=$(dirname "$0")/feeders
 
 if test -d .git; then
     feeder="$feeders"/feeder-git.sh
-    feeder_args="$interval $start $remote $branch"
+    feeder_args="$interval $startrev $relstart $remote $branch"
 elif test -d .bzr; then
     feeder="$feeders"/feeder-bzr.sh
-    feeder_args="$interval $start"
+    feeder_args="$interval $startrev $relstart"
 elif test -d .svn; then
     feeder="$feeders"/feeder-svn.sh
-    feeder_args="$interval $start"
+    feeder_args="$interval $startrev $relstart"
 else
     echo Fatal: could not find .git, .bzr or .svn directory in the current directory. Are you in the root directory of a project?
     exit 1
