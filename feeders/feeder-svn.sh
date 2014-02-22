@@ -17,6 +17,7 @@ do
             echo $PREFIX$CHANGE
         done
     done
+    test $INTERVAL = 0 && break
     svn up >/dev/null 2>&1
     sleep $INTERVAL
 done

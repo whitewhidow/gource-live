@@ -18,6 +18,7 @@ do
             echo $PREFIX$CHANGE
         done
     done
+    test $INTERVAL = 0 && break
     bzr pull >/dev/null 2>&1
     sleep $INTERVAL
 done
