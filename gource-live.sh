@@ -69,13 +69,13 @@ eval "set -- $args"  # save arguments in $@. Use "$@" in for loops, not $@
 feeders=$(dirname "$0")/feeders
 
 if test -d .git; then
-    feeder="$feeders"/feeder-git.sh
+    feeder="$feeders"/git.sh
     feeder_args="$interval $startrev $relstart $remote $branch"
 elif test -d .bzr; then
-    feeder="$feeders"/feeder-bzr.sh
+    feeder="$feeders"/bzr.sh
     feeder_args="$interval $startrev $relstart"
 elif test -d .svn; then
-    feeder="$feeders"/feeder-svn.sh
+    feeder="$feeders"/svn.sh
     feeder_args="$interval $startrev $relstart"
 else
     echo Fatal: could not find .git, .bzr or .svn directory in the current directory. Are you in the root directory of a project?
