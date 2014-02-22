@@ -8,8 +8,9 @@ test $# -ge 3 || {
 REMOTE=$1
 BRANCH=$2
 INTERVAL=$3
+START_SHA1=$4
 
-test "$4" && SHA=$4 || SHA=$(git rev-list $REMOTE/$BRANCH --max-count=10 | tail -n 1)
+test "$START_SHA1" && SHA=$START_SHA1 || SHA=$(git rev-list $REMOTE/$BRANCH --max-count=10 | tail -n 1)
 
 while true
 do
