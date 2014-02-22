@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-test $# -ge 1 || {
+test $# -ge 2 || {
     echo "usage: $0 PROJECTDIR INTERVAL [STARTREV|0 RELSTART]"
     exit 1
 }
