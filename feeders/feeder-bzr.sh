@@ -14,7 +14,7 @@ while true
 do
     for REVNO in $(bzr log --forward --line -r $REVNO.. | tail -n +2 | sed -e 's/:.*//')
     do
-        AUTHOR=$(bzr log -r $REVNO | sed -ne 's/^committer: \([^<]*\).*/\1/p')
+        AUTHOR=$(bzr log -r $REVNO | sed -ne 's/^committer: \([^<]*\>\).*/\1/p')
         TIMESTAMP=$(bzr log -r $REVNO | sed -ne 's/^timestamp: ... \([0-9 :-]*\) +.*/\1/p' | python -c 'from datetime import datetime as dt; import sys; ts = sys.stdin.readline().strip(); print dt.strftime(dt.strptime(ts, "%Y-%m-%d %H:%M:%S"), "%s")')
         PREFIX="$TIMESTAMP|$AUTHOR|"
         bzr status -c $REVNO --short --versioned 2>/dev/null | sed -e 's/.\(.\)../\1|/' | while read CHANGE
