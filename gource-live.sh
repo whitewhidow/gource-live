@@ -82,5 +82,5 @@ fi
 if test $show_feed = on; then
     "$feeder" $feeder_args
 else
-    "$feeder" $feeder_args | gource --log-format custom --file-idle-time 0 -
+    "$feeder" $feeder_args | tee /dev/stderr | gource --log-format custom --file-idle-time 0 -
 fi
