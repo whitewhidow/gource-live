@@ -25,6 +25,6 @@ do
         done
     done
     test $INTERVAL = 0 && break
-    git fetch $REMOTE >/dev/null 2>&1
+    git fetch $REMOTE $BRANCH >/dev/null 2>&1
     sleep $INTERVAL
 done
