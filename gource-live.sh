@@ -27,9 +27,10 @@ usage() {
     echo "  -s, --startrev REV       Start revision, default = $startrev"
     echo "      --relstart N         Start from HEAD - N, ignored when startrev != 0, default = $relstart"
     echo
+    echo "      --feed-only          Show feed only, default = $feed_only"
+    echo
     echo "  -r, --remote REMOTE      Name of remote (Git only), default = $remote"
     echo "  -b, --branch BRANCH      Name of branch (Git only), default = $branch"
-    echo "      --feed-only          Show feed only, default = $feed_only"
     echo
     echo "  -h, --help               Print this help"
     echo
@@ -68,13 +69,15 @@ eval "set -- $args"  # save arguments in $@. Use "$@" in for loops, not $@
 
 feeders=$(dirname "$0")/feeders
 
-if test -d .git; then
+test -d "$1" && project_dir="$1" || project_dir=.
+
+if test -d "$project_dir"/.git; then
     feeder="$feeders"/git.sh
     feeder_args="$interval $startrev $relstart $remote $branch"
-elif test -d .bzr; then
+elif test -d "$project_dir"/.bzr; then
     feeder="$feeders"/bzr.sh
     feeder_args="$interval $startrev $relstart"
-elif test -d .svn; then
+elif test -d "$project_dir"/.svn; then
     feeder="$feeders"/svn.sh
     feeder_args="$interval $startrev $relstart"
 else
@@ -82,9 +85,8 @@ else
     exit 1
 fi
 
-
 if test $feed_only = on; then
-    "$feeder" $feeder_args
+    "$feeder" "$project_dir" $feeder_args
 else
-    "$feeder" $feeder_args | tee /dev/stderr | gource --log-format custom --file-idle-time 0 -
+    "$feeder" "$project_dir" $feeder_args | tee /dev/stderr | gource --log-format custom --file-idle-time 0 -
 fi
