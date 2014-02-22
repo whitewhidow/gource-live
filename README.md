@@ -55,3 +55,14 @@ the usage help and see what parameters they need, for example:
 
     $ ./feeders/svn.sh 
     usage: ./feeders/svn.sh PROJECTDIR INTERVAL [STARTREV|0 RELSTART]
+
+
+TODO
+====
+More feature ideas to do someday.
+
+- add support for hg (mercurial)
+
+- bzr and svn could work without a local clone, getting info off the repo url
+
+- embed sample repos and a harness for easier testing
