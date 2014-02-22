@@ -8,7 +8,7 @@ test $# -ge 1 || {
 INTERVAL=$1
 START_REVNO=$2
 
-test "$START_REVNO" && REVNO=$START_REVNO || { REVNO=$(bzr revno); test "$REVNO" -gt 10 && REVNO=$(bzr revno -rlast:10) || REVNO=1; }
+test "$START_REVNO" -a "$START_REVNO" != 0 && REVNO=$START_REVNO || { REVNO=$(bzr revno); test "$REVNO" -gt 10 && REVNO=$(bzr revno -rlast:10) || REVNO=1; }
 
 while true
 do

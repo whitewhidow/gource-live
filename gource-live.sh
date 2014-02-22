@@ -37,7 +37,7 @@ usage() {
 args=
 feed_only=off
 interval=5
-start=
+start=0
 remote=origin
 branch=master
 while [ $# != 0 ]; do
@@ -66,7 +66,7 @@ feeders=$(dirname "$0")/feeders
 
 if test -d .git; then
     feeder="$feeders"/feeder-git.sh
-    feeder_args="$remote $branch $interval $start"
+    feeder_args="$interval $start $remote $branch"
 elif test -d .bzr; then
     feeder="$feeders"/feeder-bzr.sh
     feeder_args="$interval $start"

@@ -8,7 +8,7 @@ test $# -ge 1 || {
 INTERVAL=$1
 START_REVNO=$2
 
-test "$START_REVNO" && REVNO=$START_REVNO || REVNO=$(svn log -q -l 10 | sed -ne 's/^r\([0-9][0-9]*\).*/\1/p' | tail -n 1)
+test "$START_REVNO" -a "$START_REVNO" != 0 && REVNO=$START_REVNO || REVNO=$(svn log -q -l 10 | sed -ne 's/^r\([0-9][0-9]*\).*/\1/p' | tail -n 1)
 
 while true
 do
