@@ -1,5 +1,10 @@
 #!/bin/sh -e
 
+test $# -ge 3 || {
+    echo "usage: $0 REMOTE BRANCH INTERVAL [START_SHA1]"
+    exit 1
+}
+
 REMOTE=$1
 BRANCH=$2
 INTERVAL=$3
