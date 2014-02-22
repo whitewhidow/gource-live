@@ -24,10 +24,13 @@ usage() {
     echo
     echo Options:
     echo "  -i, --interval INTERVAL  Interval to poll repository for changes, default = $interval"
-    echo "  -s, --start START        Start revision, default = $start"
+    echo "  -s, --startrev REV       Start revision, default = $startrev"
+    echo "      --relstart N         Start from HEAD - N, ignored when startrev != 0, default = $relstart"
+    echo
+    echo "      --feed-only          Show feed only, default = $feed_only"
+    echo
     echo "  -r, --remote REMOTE      Name of remote (Git only), default = $remote"
     echo "  -b, --branch BRANCH      Name of branch (Git only), default = $branch"
-    echo "      --feed-only          Show feed only, default = $feed_only"
     echo
     echo "  -h, --help               Print this help"
     echo
@@ -37,14 +40,16 @@ usage() {
 args=
 feed_only=off
 interval=5
-start=
+startrev=0
+relstart=10
 remote=origin
 branch=master
 while [ $# != 0 ]; do
     case $1 in
     -h|--help) usage ;;
     -i|--interval) shift; interval=$1 ;;
-    -s|--start) shift; start=$1 ;;
+    -s|--startrev) shift; startrev=$1 ;;
+    --relstart) shift; relstart=$1 ;;
     -r|--remote) shift; remote=$1 ;;
     -b|--branch) shift; branch=$1 ;;
     --feed-only) feed_only=on ;;
@@ -64,23 +69,24 @@ eval "set -- $args"  # save arguments in $@. Use "$@" in for loops, not $@
 
 feeders=$(dirname "$0")/feeders
 
-if test -d .git; then
-    feeder="$feeders"/feeder-git.sh
-    feeder_args="$remote $branch $interval $start"
-elif test -d .bzr; then
-    feeder="$feeders"/feeder-bzr.sh
-    feeder_args="$interval $start"
-elif test -d .svn; then
-    feeder="$feeders"/feeder-svn.sh
-    feeder_args="$interval $start"
+test -d "$1" && project_dir="$1" || project_dir=.
+
+if test -d "$project_dir"/.git; then
+    feeder="$feeders"/git.sh
+    feeder_args="$interval $startrev $relstart $remote $branch"
+elif test -d "$project_dir"/.bzr; then
+    feeder="$feeders"/bzr.sh
+    feeder_args="$interval $startrev $relstart"
+elif test -d "$project_dir"/.svn; then
+    feeder="$feeders"/svn.sh
+    feeder_args="$interval $startrev $relstart"
 else
     echo Fatal: could not find .git, .bzr or .svn directory in the current directory. Are you in the root directory of a project?
     exit 1
 fi
 
-
 if test $feed_only = on; then
-    "$feeder" $feeder_args
+    "$feeder" "$project_dir" $feeder_args
 else
-    "$feeder" $feeder_args | tee /dev/stderr | gource --log-format custom --file-idle-time 0 -
+    "$feeder" "$project_dir" $feeder_args | tee /dev/stderr | gource --log-format custom --file-idle-time 0 -
 fi
