@@ -6,7 +6,7 @@
 # REV:    1.0.D (Valid are A, B, D, T and P)
 #               (For Alpha, Beta, Dev, Test and Production)
 #
-# PLATFORM: Not platform dependent
+# PLATFORM: Not platform dependent (confirmed in Linux)
 #
 # PURPOSE: Poll VCS and pipe log to Gource, to show live commits
 #
@@ -23,11 +23,11 @@ usage() {
     echo Poll VCS and pipe log to Gource, to show live commits
     echo
     echo Options:
-    echo "      --show-feed          Show feed without piping to gource, default = $show_feed"
     echo "  -i, --interval INTERVAL  Interval to poll repository for changes, default = $interval"
     echo "  -s, --start START        Start revision, default = $start"
     echo "  -r, --remote REMOTE      Name of remote (Git only), default = $remote"
     echo "  -b, --branch BRANCH      Name of branch (Git only), default = $branch"
+    echo "      --feed-only          Show feed only, default = $feed_only"
     echo
     echo "  -h, --help               Print this help"
     echo
@@ -35,7 +35,7 @@ usage() {
 }
 
 args=
-show_feed=off
+feed_only=off
 interval=5
 start=
 remote=origin
@@ -43,11 +43,11 @@ branch=master
 while [ $# != 0 ]; do
     case $1 in
     -h|--help) usage ;;
-    --show-feed) show_feed=on ;;
     -i|--interval) shift; interval=$1 ;;
     -s|--start) shift; start=$1 ;;
     -r|--remote) shift; remote=$1 ;;
     -b|--branch) shift; branch=$1 ;;
+    --feed-only) feed_only=on ;;
 #    --) shift; while [ $# != 0 ]; do args="$args \"$1\""; shift; done; break ;;
     -) usage "Unknown option: $1" ;;
     -?*) usage "Unknown option: $1" ;;
@@ -79,7 +79,7 @@ else
 fi
 
 
-if test $show_feed = on; then
+if test $feed_only = on; then
     "$feeder" $feeder_args
 else
     "$feeder" $feeder_args | tee /dev/stderr | gource --log-format custom --file-idle-time 0 -
