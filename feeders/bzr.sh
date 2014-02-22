@@ -20,7 +20,7 @@ do
         AUTHOR=$(bzr log -r $REVNO "$PROJECTDIR" | sed -ne 's/^committer: \([^<]*\>\).*/\1/p')
         TIMESTAMP=$(bzr log -r $REVNO "$PROJECTDIR" | perl -MTime::Local -ne '/^timestamp: .*([0-9]{4})-([0-9]{2})-([0-9]{2}) (\d\d):(\d\d):(\d\d)/ && print timelocal($6, $5, $4, $3, $2-1, $1)')
         PREFIX="$TIMESTAMP|$AUTHOR|"
-        bzr status -c $REVNO --short --versioned "$PROJECTDIR" 2>/dev/null | sed -e 's/.\(.\)../\1|/' | while read CHANGE
+        bzr status -c $REVNO --short --versioned "$PROJECTDIR" 2>/dev/null | sed -ne 's/^R.../M|/p' -e 's/^.N../A|/p' -e 's/^.\([MD]\)../\1|/p' | while read CHANGE
         do
             echo $PREFIX$CHANGE
         done
