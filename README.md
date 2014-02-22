@@ -14,7 +14,7 @@ Supported VCS:
 Requirements
 ------------
 * Gource: https://code.google.com/p/gource/
-* Python 2.7
+* Bash
 
 
 Usage
@@ -23,8 +23,8 @@ Usage
 
 2. `cd` into your project's directory
 
-3. Run `gource-live.py`
+3. Run `gource-live.sh` or `/path/to/this/project/gource-live.sh`
 
 By default this will poll the repository every 5 seconds,
-and feed the changes to Gource. Run `gource-live.py --help`
+and feed the changes to Gource. Run `gource-live.sh --help`
 for more options.
