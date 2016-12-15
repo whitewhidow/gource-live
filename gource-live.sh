@@ -63,7 +63,7 @@ while [ $# != 0 ]; do
     shift
 done
 
-eval "set -- $args"  # save arguments in $@. Use "$@" in for loops, not $@ 
+eval "set -- $args"  # save arguments in $@. Use "$@" in for loops, not $@
 
 #test $# -gt 0 || usage
 
@@ -80,6 +80,9 @@ elif test -d "$project_dir"/.bzr; then
 elif test -d "$project_dir"/.svn; then
     feeder="$feeders"/svn.sh
     feeder_args="$interval $startrev $relstart"
+elif test -d "$project_dir"/.hg; then
+    feeder="$feeders"/hg.sh
+	 feeder_args="$interval $startrev $relstart"
 else
     echo Fatal: could not find .git, .bzr or .svn directory in the current directory. Are you in the root directory of a project?
     exit 1
