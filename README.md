@@ -9,6 +9,7 @@ Supported VCS:
 * Git
 * Bazaar
 * Subversion
+* Mercurial
 
 
 Requirements
