@@ -28,12 +28,12 @@ do
         done
     done
     test $INTERVAL = 0 && break
-    $BASECMD pull -u
+    $BASECMD pull -u >/dev/null 2>&1
 	 NEWREV=$($BASECMD log -l 1 --template "{rev}\n")
 	 while [ $NEWREV = $REV ]
 	 do
     	sleep $INTERVAL
-		$BASECMD pull -u &> /dev/null
+		$BASECMD pull -u >/dev/null 2>&1
       NEWREV=$($BASECMD log -l 1 --template "{rev}\n")
     done
 done
